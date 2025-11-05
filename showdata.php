@@ -1,5 +1,5 @@
 <?php
-$file = 'registrations.txt';
+$file = '/tmp/registrations.txt'; // ✅ Use /tmp on Render
 
 echo "<div style='
     font-family:Poppins,sans-serif;
@@ -16,7 +16,13 @@ if (file_exists($file) && filesize($file) > 0) {
     $lines = file($file);
     echo "<ul style='list-style:none;padding:0;'>";
     foreach ($lines as $line) {
-        echo "<li style='margin:10px 0;padding:10px;border-bottom:1px solid #ddd;'>$line</li>";
+        echo "<li style='
+            margin:10px 0;
+            padding:10px;
+            border-bottom:1px solid #ddd;
+            background:#f9f9ff;
+            border-radius:5px;
+        '>$line</li>";
     }
     echo "</ul>";
 } else {
@@ -24,6 +30,12 @@ if (file_exists($file) && filesize($file) > 0) {
 }
 
 echo "<div style='text-align:center;margin-top:20px;'>
-<a href='index.html' style='background:#5563DE;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;'>Go Back</a>
+<a href='index.html' style='
+    background:#5563DE;
+    color:white;
+    padding:10px 20px;
+    border-radius:6px;
+    text-decoration:none;
+'>Go Back</a>
 </div></div>";
 ?>
