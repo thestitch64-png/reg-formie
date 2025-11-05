@@ -1,5 +1,12 @@
 <?php
-$file = '/tmp/registrations.txt'; // ✅ Use /tmp on Render
+// Always read from /tmp because Render allows writes only there
+$tmpFile = '/tmp/registrations.txt';
+
+// Try fallback (in case you’re testing locally)
+$localFile = __DIR__ . '/registrations.txt';
+
+// Use whichever exists
+$file = file_exists($tmpFile) ? $tmpFile : $localFile;
 
 echo "<div style='
     font-family:Poppins,sans-serif;
