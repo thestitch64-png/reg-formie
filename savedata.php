@@ -1,13 +1,14 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $file = 'registrations.txt';
+    // ✅ Use /tmp directory on Render (writable)
+    $file = '/tmp/registrations.txt';
+    $publicCopy = __DIR__ . '/registrations.txt'; // to show data in showdata.php if possible
 
-    // ✅ Ensure file exists and is writable
+    // ✅ Ensure the file exists
     if (!file_exists($file)) {
         $handle = fopen($file, 'w');
         fclose($handle);
     }
-    chmod($file, 0666);
 
     // ✅ Collect form data safely
     $name = htmlspecialchars($_POST['name']);
@@ -16,9 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $course = htmlspecialchars($_POST['course']);
     $address = htmlspecialchars($_POST['address']);
 
-    // ✅ Format data to store
+    // ✅ Format data
     $data = "Name: $name | Email: $email | Phone: $phone | Course: $course | Address: $address\n";
+
+    // ✅ Write to writable temp file
     file_put_contents($file, $data, FILE_APPEND | LOCK_EX);
+
+    // Optionally copy to local directory (won’t persist after restart)
+    @copy($file, $publicCopy);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
-
 <?php
 } else {
     echo "<h3 style='text-align:center;margin-top:50px;font-family:Poppins,sans-serif;'>Invalid Request ❌</h3>";
