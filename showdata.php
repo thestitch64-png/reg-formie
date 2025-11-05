@@ -1,48 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Show Registrations</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-  <style>
-    body {
-      background: #f9f9f9;
-      font-family: "Poppins", sans-serif;
-      padding: 20px;
+<?php
+$file = 'registrations.txt';
+
+echo "<div style='
+    font-family:Poppins,sans-serif;
+    background:#fff;
+    max-width:800px;
+    margin:50px auto;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+'>
+<h2 style='color:#5563DE;text-align:center;'>All Applications 📄</h2>";
+
+if (file_exists($file) && filesize($file) > 0) {
+    $lines = file($file);
+    echo "<ul style='list-style:none;padding:0;'>";
+    foreach ($lines as $line) {
+        echo "<li style='margin:10px 0;padding:10px;border-bottom:1px solid #ddd;'>$line</li>";
     }
-    .container {
-      max-width: 800px;
-      background: white;
-      border-radius: 10px;
-      padding: 25px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    pre {
-      background: #eee;
-      padding: 15px;
-      border-radius: 8px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>All Registrations</h2>
-    <hr>
-    <?php
-      $file = "registrations.txt";
-      if (file_exists($file)) {
-        $contents = file_get_contents($file);
-        if (trim($contents) === "") {
-          echo "<p>No registrations found yet.</p>";
-        } else {
-          echo "<pre>$contents</pre>";
-        }
-      } else {
-        echo "<p>No registrations found yet.</p>";
-      }
-    ?>
-    <a href="index.html" class="btn btn-primary mt-3">Back to Form</a>
-  </div>
-</body>
-</html>
+    echo "</ul>";
+} else {
+    echo "<p style='text-align:center;color:#777;'>No applications yet.</p>";
+}
+
+echo "<div style='text-align:center;margin-top:20px;'>
+<a href='index.html' style='background:#5563DE;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;'>Go Back</a>
+</div></div>";
+?>
