@@ -1,10 +1,8 @@
 services:
   - type: web
-    name: online-registration-form
+    name: registration-form
     env: docker
     plan: free
-    branch: main
-    autoDeploy: true
     dockerfilePath: ./Dockerfile
     envVars:
       - key: PORT
